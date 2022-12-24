@@ -1,34 +1,35 @@
 {
-  "name": "channelpointsdiscordbot",
-  "version": "1.0.0",
-  "description": "Discord bot allowing for channel points and predictions a la Twitch",
-  "main": "index.js",
-  "scripts": {
-    "build": "npx tsc",
-    "lint": "npx eslint --ext .js,.ts src/",
-    "fix-lint": "npx eslint --fix --ext .js,.ts src/",
-    "start": "node build/index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mattgriffin94/channelpointsdiscordbot.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/mattgriffin94/channelpointsdiscordbot/issues"
-  },
-  "homepage": "https://github.com/mattgriffin94/channelpointsdiscordbot#readme",
-  "devDependencies": {
-    "@types/node": "^18.11.17",
-    "@typescript-eslint/eslint-plugin": "^5.47.0",
-    "@typescript-eslint/parser": "^5.47.0",
-    "eslint": "^8.30.0",
-    "typescript": "^4.9.4"
-  },
-  "dependencies": {
-    "discord.js": "^14.7.1",
-    "dotenv": "^16.0.3"
-  }
+    "name": "channelpointsdiscordbot",
+    "version": "1.0.0",
+    "description": "Discord bot allowing for channel points and predictions a la Twitch",
+    "main": "index.js",
+    "scripts": {
+        "build": "npx tsc",
+        "lint": "npx eslint --ext .js,.ts src/",
+        "fix-lint": "npx eslint --fix --ext .js,.ts src/",
+        "start": "node build/index.js",
+        "deploy-commands": "node build/commandDeployment.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/mattgriffin94/channelpointsdiscordbot.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/mattgriffin94/channelpointsdiscordbot/issues"
+    },
+    "homepage": "https://github.com/mattgriffin94/channelpointsdiscordbot#readme",
+    "devDependencies": {
+        "@types/node": "^18.11.17",
+        "@typescript-eslint/eslint-plugin": "^5.47.0",
+        "@typescript-eslint/parser": "^5.47.0",
+        "eslint": "^8.30.0",
+        "typescript": "^4.9.4"
+    },
+    "dependencies": {
+        "discord.js": "^14.7.1",
+        "dotenv": "^16.0.3"
+    }
 }
