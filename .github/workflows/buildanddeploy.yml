@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [17.x, 18.x, 19.x]
+        node-version: [19.x]
 
     steps:
     - uses: actions/checkout@v3
@@ -26,10 +26,8 @@ jobs:
     - run: npm ci
     - run: npm run lint
     - run: npm run build
-  deploy:
 
-    runs-on: ubuntu-latest
-    - name: SSH Remote Commands
+    - name: Deploy on Server
       uses: appleboy/ssh-action@v0.1.6
       with:
           host: ${{secrets.SSH_HOST}} 
