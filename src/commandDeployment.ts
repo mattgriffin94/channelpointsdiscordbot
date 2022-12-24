@@ -8,7 +8,7 @@ const token = process.env.DISCORD_BOT_TOKEN || '';
 
 
 const commandJSONs = [
-    createTrollerCommandWithInfo().commandBuilder.toJSON(),
+    createTrollerCommandWithInfo().info.toJSON(),
 ];
 
 // Construct and prepare an instance of the REST module

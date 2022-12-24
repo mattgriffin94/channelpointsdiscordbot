@@ -1,11 +1,20 @@
-import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js';
+import { ChatInputCommandInteraction, RESTPostAPIChatInputApplicationCommandsJSONBody } from 'discord.js';
+
+interface CommandInfo {
+    name: string;
+    toJSON: () => RESTPostAPIChatInputApplicationCommandsJSONBody
+}
 
 class CommandWithInfo {
-    commandBuilder: SlashCommandBuilder;
+    info: CommandInfo;
     execute: (interaction: ChatInputCommandInteraction) => Promise<void>;
 
-    constructor(commandBuilder: SlashCommandBuilder, execute: (interaction: ChatInputCommandInteraction) => Promise<void>) {
-        this.commandBuilder = commandBuilder;
+    constructor(
+        info: CommandInfo,
+        execute: (interaction: ChatInputCommandInteraction) => Promise<void>,
+    ) {
+
+        this.info = info;
         this.execute = execute;
     }
 }

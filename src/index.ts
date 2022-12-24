@@ -25,7 +25,7 @@ const commandsWithInfo = [
     createTrollerCommandWithInfo(),
 ];
 for (const command of commandsWithInfo) {
-    client.commands.set(command.commandBuilder.name, command);
+    client.commands.set(command.info.name, command);
 }
 
 // Handle Commands
