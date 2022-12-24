@@ -1,6 +1,10 @@
 # channelpointsdiscordbot
 Discord bot allowing for channel points and predictions a la Twitch
 
+## Setup
+1. Install Node.  I recommend using [`nvm`](https://github.com/nvm-sh/nvm) but feel free to use any method you like.  I've built on v17+.
+2. Git Clone this repo
+
 ## Building Instructions
 1. `npm install`
 2. In the root directory create a file called `.env` with the contents:
