@@ -33,6 +33,9 @@ jobs:
           host: ${{secrets.SSH_HOST}} 
           key: ${{secrets.SSH_KEY}} 
           username: ${{ secrets.SSH_USERNAME }}
-          script: /home/cicd/deploy.sh
+          script: |
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
+            /home/cicd/deploy.sh
 
 
