@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import { Events, GatewayIntentBits, IntentsBitField } from 'discord.js';
 import { CommandClient } from './classes/CommandClient';
 import { createTrollerCommandWithInfo } from './commands/troll';
+import { addPoints } from './commands/addPoints';
 
 dotenv.config();
 const token = process.env.DISCORD_BOT_TOKEN;
@@ -14,22 +15,19 @@ for (const intent in GatewayIntentBits) {
 
 // Initialize Client
 const client = new CommandClient({ intents: allIntents });
-client.once(Events.ClientReady, c => {
+client.once(Events.ClientReady, (c) => {
     console.log(`Ready! Logged in as ${c.user.tag}`);
 });
 client.login(token);
 
-
 // Register commands
-const commandsWithInfo = [
-    createTrollerCommandWithInfo(),
-];
+const commandsWithInfo = [createTrollerCommandWithInfo(), addPoints()];
 for (const command of commandsWithInfo) {
     client.commands.set(command.info.name, command);
 }
 
 // Handle Commands
-client.on(Events.InteractionCreate, async interaction => {
+client.on(Events.InteractionCreate, async (interaction) => {
     if (!interaction.isChatInputCommand()) return;
     const commandClient = interaction.client as CommandClient;
     const command = commandClient.commands.get(interaction.commandName);
@@ -38,6 +36,9 @@ client.on(Events.InteractionCreate, async interaction => {
     }
     catch (error) {
         console.error(error);
-        await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+        await interaction.reply({
+            content: 'There was an error while executing this command!',
+            ephemeral: true,
+        });
     }
 });
