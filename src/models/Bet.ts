@@ -30,7 +30,7 @@ export class Bet {
         this.winner = params.winner;
     }
 
-    static async create(params: { description: string; optionA: string; optionB: string }) {
+    static async addBet(params: { description: string; optionA: string; optionB: string }) {
         const betKey = betsRef.push().key as string;
         const bet = new Bet({
             id: betKey,
@@ -44,16 +44,16 @@ export class Bet {
         return bet;
     }
 
-    static async findById(id: string) {
+    static async getBet(id: string) {
         const betSnapshot = await betsRef.child(id).once('value');
         return betSnapshot.val();
     }
 
-    static async update(id: string, updates: { status: string; winner: string | null }) {
+    static async updateBet(id: string, updates: { status: string; winner: string | null }) {
         await betsRef.child(id).update(updates);
     }
 
-    static async delete(id: string) {
+    static async deleteBet(id: string) {
         await betsRef.child(id).remove();
     }
 }
