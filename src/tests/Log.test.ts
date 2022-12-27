@@ -52,4 +52,24 @@ describe('update', () => {
         expect(updatedLog.amountWon).toEqual(500);
         await Log.deleteRecord(testUserId, testBetId);
     });
+
+});
+
+describe('get records for bet', () => {
+    it('gets all logs for a bet', async () => {
+        await Log.addRecord({
+            userId: testUserId,
+            betId: testBetId,
+            ...testLog,
+        });
+        await Log.addRecord({
+            userId: '123',
+            betId: testBetId,
+            ...testLog,
+        });
+        const logs = await Log.getRecordsforBet(testBetId);
+        expect(Object.keys(logs).length).toEqual(2);
+        await Log.deleteRecord(testUserId, testBetId);
+        await Log.deleteRecord('123', testBetId);
+    });
 });

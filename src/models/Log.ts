@@ -58,4 +58,16 @@ export class Log {
     static async deleteRecord(userId: string, betId: string) {
         await logsRef.child(`${userId}/${betId}`).remove();
     }
+
+    static async getRecordsforBet(betId: string) {
+        const logs = [] as Log[];
+        const logsSnapshot = await logsRef.once('value');
+        logsSnapshot.forEach((userSnapshot) => {
+            const userLogs = userSnapshot.val();
+            if (userLogs[betId]) {
+                logs.push(userLogs[betId]);
+            }
+        });
+        return logs;
+    }
 }
