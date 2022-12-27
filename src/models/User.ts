@@ -19,7 +19,7 @@ export class User {
         this.points = params.points;
     }
 
-    static async create(params: { discordId: string; username: string; points: number }) {
+    static async addUser(params: { discordId: string; username: string; points: number }) {
         const userKey = usersRef.push().key as string;
         const user = new User({
             id: userKey,
@@ -31,16 +31,17 @@ export class User {
         return user;
     }
 
-    static async findById(id: string) {
+    static async getUser(id: string) {
         const userSnapshot = await usersRef.child(id).once('value');
         return userSnapshot.val();
     }
 
-    static async update(id: string, updates: { points: number }) {
+    static async updateUser(id: string, updates: { points: number }) {
         await usersRef.child(id).update(updates);
     }
 
-    static async delete(id: string) {
+    static async deleteUser(id: string) {
         await usersRef.child(id).remove();
     }
+
 }
