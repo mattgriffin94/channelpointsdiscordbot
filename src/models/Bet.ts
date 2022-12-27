@@ -1,5 +1,8 @@
 import * as admin from 'firebase-admin';
+import { Log } from './Log';
+import { User } from './User';
 import initializeFirebase from '../dbInit';
+import { distributePoints } from './utils/distributePoints';
 
 initializeFirebase();
 
@@ -62,12 +65,45 @@ export class Bet {
         return betSnapshot.val();
     }
 
-    static async updateBet(id: string, updates: { status: string; winner: string | null }) {
+    static async updateBet(id: string,
+        updates: { pointsA: number; pointsB: number }) {
         await betsRef.child(id).update(updates);
     }
 
     static async deleteBet(id: string) {
         await betsRef.child(id).remove();
+    }
+
+    static async closeBet(id: string, winningOption: string) {
+        if (winningOption !== 'A' && winningOption !== 'B') {
+            throw new Error('Invalid winning option');
+        }
+
+        const bet = await Bet.getBet(id);
+
+        if (bet.status !== 'In Progress') {
+            throw new Error('Bet is not in progress');
+        }
+
+        await betsRef.child(id).update({ status: 'Closed', winner: winningOption });
+
+        const totalPoints = bet.pointsA + bet.pointsB;
+
+        const logs = await Log.getRecordsforBet(id);
+
+        // get logs that chose winning option
+        const winningLogs = logs.filter((log: Log) => log.option === winningOption);
+
+        // distribute points to winning logs
+        const logsWithPoints = distributePoints(winningLogs, id, totalPoints);
+
+        // update logs and users with points
+        const updatePoints = logsWithPoints.map(async (log: Log) => {
+            await Log.updateRecord(log.userId, log.betId, { amountWon: log.amountWon as number });
+            return User.addPoints(log.userId, log.amountWon as number);
+        });
+        await Promise.all(updatePoints);
+
     }
 
 }
