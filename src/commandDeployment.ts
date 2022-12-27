@@ -1,7 +1,7 @@
 import { REST, Routes } from 'discord.js';
 import { createTrollerCommandWithInfo } from './commands/troll';
 import { addPoints } from './commands/addPoints';
-import { clientId } from './config.json';
+import { clientId } from './config/config.json';
 import dotenv from 'dotenv';
 
 dotenv.config();
