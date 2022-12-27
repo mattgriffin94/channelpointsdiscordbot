@@ -52,14 +52,10 @@ export class Log {
     }
 
     static async update(userId: string, betId: string, updates: { amountWon: number }) {
-        const log = await this.findByUserAndBetId(userId, betId);
-        const logKey = Object.keys(log)[0];
         await logsRef.child(`${userId}/${betId}`).update(updates);
     }
 
     static async delete(userId: string, betId: string) {
-        const log = await this.findByUserAndBetId(userId, betId);
-        const logKey = Object.keys(log)[0];
         await logsRef.child(`${userId}/${betId}`).remove();
     }
 }

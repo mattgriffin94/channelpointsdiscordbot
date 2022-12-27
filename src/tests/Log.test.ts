@@ -50,6 +50,6 @@ describe('update', () => {
         await Log.update(testUserId, testBetId, updates);
         const updatedLog = await Log.findByUserAndBetId(testUserId, testBetId);
         expect(updatedLog.amountWon).toEqual(500);
-        // await Log.delete(testUserId, testBetId);
+        await Log.delete(testUserId, testBetId);
     });
 });
