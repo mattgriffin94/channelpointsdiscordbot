@@ -70,4 +70,9 @@ export class Log {
         });
         return logs;
     }
+
+    static async getRecordsforUser(userId: string) {
+        const logsSnapshot = await logsRef.child(userId).once('value');
+        return logsSnapshot.val();
+    }
 }

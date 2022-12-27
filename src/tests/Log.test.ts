@@ -73,3 +73,20 @@ describe('get records for bet', () => {
         await Log.deleteRecord('123', testBetId);
     });
 });
+
+test('gets all logs for a user', async () => {
+    await Log.addRecord({
+        userId: testUserId,
+        betId: testBetId,
+        ...testLog,
+    });
+    await Log.addRecord({
+        userId: testUserId,
+        betId: '123',
+        ...testLog,
+    });
+    const logs = await Log.getRecordsforUser(testUserId);
+    expect(Object.keys(logs).length).toEqual(2);
+    await Log.deleteRecord(testUserId, testBetId);
+    await Log.deleteRecord(testUserId, '123');
+});
