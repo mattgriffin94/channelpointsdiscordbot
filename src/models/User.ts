@@ -44,4 +44,11 @@ export class User {
         await usersRef.child(id).remove();
     }
 
+    static async addPoints(id: string, points: number) {
+        const user = await this.getUser(id);
+        if (user) {
+            await this.updateUser(id, { points: user.points + points });
+        }
+    }
+
 }

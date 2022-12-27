@@ -37,3 +37,13 @@ describe('update', () => {
         await User.deleteUser(user.id);
     });
 });
+
+describe(' Add points to a user\'s balance ', () => {
+    it('adds points to a user', async () => {
+        const user = await User.addUser(testUser);
+        await User.addPoints(user.id, 500);
+        const updatedUser = await User.getUser(user.id);
+        expect(updatedUser.points).toEqual(1500);
+        await User.deleteUser(user.id);
+    });
+});
