@@ -9,7 +9,7 @@
     "fix-lint": "npx eslint --fix --ext .js,.ts src/",
     "start": "node build/index.js",
     "deploy-commands": "node build/commandDeployment.js",
-    "test": "jest --detectOpenHandles --forceExit --silent"
+    "test": "jest --detectOpenHandles --forceExit"
   },
   "repository": {
     "type": "git",
