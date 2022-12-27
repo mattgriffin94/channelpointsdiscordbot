@@ -1,4 +1,4 @@
-import { User } from '../models';
+import { User, Bet, Log } from '../models';
 
 const testUser = {
     discordId: '12345',
@@ -45,5 +45,24 @@ describe(' Add points to a user\'s balance ', () => {
         const updatedUser = await User.getUser(user.id);
         expect(updatedUser.points).toEqual(1500);
         await User.deleteUser(user.id);
+    });
+});
+
+describe(' Place a bet ', () => {
+    it ('places a bet', async () => {
+        const user = await User.addUser(testUser);
+        const bet = await Bet.addBet({
+            description: 'test description',
+            optionA: 'option 1',
+            optionB: 'option 2',
+        });
+        await User.placeBet(user.id, bet.id, 100, 'A');
+        const updatedUser = await User.getUser(user.id);
+        const updatedBet = await Bet.getBet(bet.id);
+        expect(updatedUser.points).toEqual(900);
+        expect(updatedBet.pointsA).toEqual(100);
+        await User.deleteUser(user.id);
+        await Bet.deleteBet(bet.id);
+        await Log.deleteRecord(user.id, bet.id);
     });
 });
