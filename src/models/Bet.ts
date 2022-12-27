@@ -49,6 +49,11 @@ export class Bet {
         return betSnapshot.val();
     }
 
+    static async getActiveBets() {
+        const betSnapshot = await betsRef.orderByChild('status').equalTo('In Progress').once('value');
+        return betSnapshot.val();
+    }
+
     static async updateBet(id: string, updates: { status: string; winner: string | null }) {
         await betsRef.child(id).update(updates);
     }

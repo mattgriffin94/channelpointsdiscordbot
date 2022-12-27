@@ -36,9 +36,25 @@ describe('update', () => {
         const bet = await Bet.addBet(testBet);
         const updates = { status: 'Closed', winner: 'New England Patriots' };
         await Bet.updateBet(bet.id, updates);
-        const updatedBet = await Bet.findById(bet.id);
+        const updatedBet = await Bet.getBet(bet.id);
         expect(updatedBet.status).toEqual('Closed');
         expect(updatedBet.winner).toEqual('New England Patriots');
         await Bet.deleteBet(bet.id);
+    });
+});
+
+describe('get active bets', () => {
+    it('gets all active bets', async () => {
+        const bet1 = await Bet.addBet(testBet);
+        const bet2 = await Bet.addBet({
+            description: 'Who will win the NBA Finals?',
+            optionA: 'Golden State Warriors',
+            optionB: 'Cleveland Cavaliers',
+        });
+        const activeBets = await Bet.getActiveBets();
+        const activeBetIds = Object.keys(activeBets);
+        expect(activeBetIds).toHaveLength(2);
+        await Bet.deleteBet(bet1.id);
+        await Bet.deleteBet(bet2.id);
     });
 });
