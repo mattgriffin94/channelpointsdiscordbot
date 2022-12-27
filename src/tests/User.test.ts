@@ -1,4 +1,4 @@
-import { User } from '../models/index';
+import { User } from '../models';
 
 const testUser = {
     discordId: '12345',
