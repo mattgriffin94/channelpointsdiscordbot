@@ -84,4 +84,18 @@ export class User {
         }
     }
 
+    static async getLeaderboard() {
+        const usersSnapshot = await usersRef.orderByChild('points').limitToLast(10).once('value');
+        const leaderboard: { discordId: string; username: string; points: number }[] = [];
+        usersSnapshot.forEach((userSnapshot) => {
+            leaderboard.push({
+                discordId: userSnapshot.val().discordId,
+                username: userSnapshot.val().username,
+                points: userSnapshot.val().points,
+            });
+        });
+        return leaderboard.reverse();
+    }
+
+
 }

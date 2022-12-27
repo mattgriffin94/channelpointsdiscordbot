@@ -66,3 +66,26 @@ describe(' Place a bet ', () => {
         await Log.deleteRecord(user.id, bet.id);
     });
 });
+
+describe('test leaderboard', () => {
+    it('gets the leaderboard', async () => {
+        const user1 = await User.addUser(testUser);
+        const user2 = await User.addUser({
+            discordId: '123456',
+            username: 'testuser2',
+            points: 500,
+        });
+        const user3 = await User.addUser({
+            discordId: '1234567',
+            username: 'testuser3',
+            points: 2000,
+        });
+        const leaderboard = await User.getLeaderboard();
+        expect(leaderboard[0].discordId).toEqual(user3.discordId);
+        expect(leaderboard[1].discordId).toEqual(user1.discordId);
+        expect(leaderboard[2].discordId).toEqual(user2.discordId);
+        await User.deleteUser(user1.id);
+        await User.deleteUser(user2.id);
+        await User.deleteUser(user3.id);
+    });
+});
