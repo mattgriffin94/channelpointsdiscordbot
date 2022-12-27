@@ -13,6 +13,8 @@ export class Bet {
     optionB: string;
     status: string;
     winner: string | null;
+    pointsA: number;
+    pointsB: number;
 
     constructor(params: {
         id: string;
@@ -21,6 +23,8 @@ export class Bet {
         optionB: string;
         status: string;
         winner: string | null;
+        pointsA: number;
+        pointsB: number;
     }) {
         this.id = params.id;
         this.description = params.description;
@@ -28,6 +32,8 @@ export class Bet {
         this.optionB = params.optionB;
         this.status = params.status;
         this.winner = params.winner;
+        this.pointsA = params.pointsA;
+        this.pointsB = params.pointsB;
     }
 
     static async addBet(params: { description: string; optionA: string; optionB: string }) {
@@ -39,6 +45,8 @@ export class Bet {
             optionB: params.optionB,
             status: 'In Progress',
             winner: null,
+            pointsA: 0,
+            pointsB: 0,
         });
         await betsRef.child(betKey).set(bet);
         return bet;
@@ -61,4 +69,5 @@ export class Bet {
     static async deleteBet(id: string) {
         await betsRef.child(id).remove();
     }
+
 }
