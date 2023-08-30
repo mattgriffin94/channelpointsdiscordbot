@@ -7,11 +7,11 @@ async function connectToDatabase(): Promise<void> {
     try {
         await client.connect();
         console.log('Connected to the local MongoDB instance');
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Error connecting to the local MongoDB instance:', error);
     }
 }
 
 export { connectToDatabase, client };
-
 
