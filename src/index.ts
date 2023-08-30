@@ -3,6 +3,7 @@ import { Events, GatewayIntentBits, IntentsBitField } from 'discord.js';
 import { CommandClient } from './classes/CommandClient';
 import { createTrollerCommandWithInfo } from './commands/troll';
 import { createTallyCommandWithInfo } from './commands/tally';
+import { connectToDatabase } from './db/MongoManager';
 
 dotenv.config();
 const token = process.env.DISCORD_BOT_TOKEN;
@@ -15,8 +16,9 @@ for (const intent in GatewayIntentBits) {
 
 // Initialize Client
 const client = new CommandClient({ intents: allIntents });
-client.once(Events.ClientReady, c => {
+client.once(Events.ClientReady, async c => {
     console.log(`Ready! Logged in as ${c.user.tag}`);
+    await connectToDatabase();
 });
 client.login(token);
 
