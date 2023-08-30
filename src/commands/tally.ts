@@ -44,9 +44,9 @@ function createTallyCommandWithInfo(): CommandWithInfo {
             }
 
             if (incrementBy != 0) {
-                await interaction.reply(`The tally ${name} was updated by ${incrementBy} and is now ${finalResult}`);
+                await interaction.reply(`The tally *** ${name} *** was updated by *** ${incrementBy} *** and is now *** ${finalResult} ***`);
             } else {
-                await interaction.reply(`The tally ${name} currently stands at  ${finalResult}`);
+                await interaction.reply(`The tally *** ${name} *** currently stands at *** ${finalResult} ***`);
             }
         } catch (error) {
             console.error('Error incrementing number:', error);
