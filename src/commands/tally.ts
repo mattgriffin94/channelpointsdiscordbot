@@ -11,20 +11,37 @@ function createTallyCommandWithInfo(): CommandWithInfo {
     async function execute(interaction: ChatInputCommandInteraction) {
         try {
 
+            // Get all the params specified by the user
             const name = interaction.options.getString('name');
             var incrementBy = interaction.options.getInteger('increment');
             if (incrementBy === null || incrementBy === undefined) {
                 incrementBy = 0;
             }
 
+            // set up the db and collection
             const database = client.db('discord');
             const collection = database.collection('keyValuePairs');
+
+            var finalResult = 0;
     
+            // Tell Mongo to Update the Key by the Increment
             const result = await collection.findOneAndUpdate(
                 { key: name },
                 { $inc: { value: incrementBy } },
                 { returnDocument: ReturnDocument.AFTER }
             );
+
+            // If we got a result back great! It means it already existed
+            if (result !== null) {
+                finalResult = result.value.value;
+            } 
+            
+            // Otherwise we need to actually create it
+            else {
+                const data = { key: name, value: incrementBy };
+                await collection.insertOne(data);
+                finalResult = incrementBy;
+            }
 
             await interaction.reply(`hello from tally ${result}`);
         } catch (error) {
