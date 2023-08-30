@@ -43,7 +43,7 @@ function createTallyCommandWithInfo(): CommandWithInfo {
                 finalResult = incrementBy;
             }
 
-            await interaction.reply(`hello from tally ${result}`);
+            await interaction.reply(`hello from tally ${finalResult}`);
         } catch (error) {
             console.error('Error incrementing number:', error);
         }
