@@ -16,6 +16,16 @@ OPEN_AI_KEY=open-ai-key-here
 3. `npm run build`
 Note: lint is enforced. To verify run `npm run lint`; to fix solveable errors run `npm run fix-lint`.
 
+## Testing Database Locally
+To test the database, make sure you have a mongoDB instance running locally at `localhost:27017` (this is the default if you just start running Mongo).
+
+Additionally, make sure your Mongo instance has a DB named `discord` and a collection named `keyValuePairs`.
+
+Once you have your above Mongo instance running locally, you can test out anything that uses the database.
+
+## More Testing Instructions
+Since the Bot is probably running at any given time on our production server, it may be easiest to use your own discord test bot (and supply it to the DISCORD_BOT_TOKEN) for easier testing without conflicts.  Make sure you run `npm run deploy-commands` as outlined below in `Adding Commands` for your test bot to get the commands here registered to it.
+
 ## Running instructions
 1. `npm start`
 
