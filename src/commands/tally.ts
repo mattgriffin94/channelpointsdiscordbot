@@ -47,8 +47,6 @@ function createTallyCommandWithInfo(): CommandWithInfo {
         } catch (error) {
             console.error('Error incrementing number:', error);
         }
-        
-        await interaction.reply("hello from tally");
     }
 
     return new CommandWithInfo(command, execute);
