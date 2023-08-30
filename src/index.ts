@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import { Events, GatewayIntentBits, IntentsBitField } from 'discord.js';
 import { CommandClient } from './classes/CommandClient';
 import { createTrollerCommandWithInfo } from './commands/troll';
+import { createTallyCommandWithInfo } from './commands/tally';
 
 dotenv.config();
 const token = process.env.DISCORD_BOT_TOKEN;
@@ -23,6 +24,7 @@ client.login(token);
 // Register commands
 const commandsWithInfo = [
     createTrollerCommandWithInfo(),
+    createTallyCommandWithInfo(),
 ];
 for (const command of commandsWithInfo) {
     client.commands.set(command.info.name, command);

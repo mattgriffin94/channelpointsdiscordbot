@@ -2,6 +2,7 @@ import { REST, Routes } from 'discord.js';
 import { createTrollerCommandWithInfo } from './commands/troll';
 import { clientId } from './config.json';
 import dotenv from 'dotenv';
+import { createTallyCommandWithInfo } from './commands/tally';
 
 dotenv.config();
 const token = process.env.DISCORD_BOT_TOKEN || '';
@@ -9,6 +10,7 @@ const token = process.env.DISCORD_BOT_TOKEN || '';
 
 const commandJSONs = [
     createTrollerCommandWithInfo().info.toJSON(),
+    createTallyCommandWithInfo().info.toJSON(),
 ];
 
 // Construct and prepare an instance of the REST module
