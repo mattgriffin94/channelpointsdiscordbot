@@ -33,7 +33,7 @@ function createTallyCommandWithInfo(): CommandWithInfo {
 
             // If we got a result back great! It means it already existed
             if (result !== null) {
-                finalResult = result.value.value;
+                finalResult = result.value;
             } 
             
             // Otherwise we need to actually create it
@@ -43,7 +43,11 @@ function createTallyCommandWithInfo(): CommandWithInfo {
                 finalResult = incrementBy;
             }
 
-            await interaction.reply(`hello from tally ${finalResult}`);
+            if (incrementBy != 0) {
+                await interaction.reply(`The tally ${name} was updated by ${incrementBy} and is now ${finalResult}`);
+            } else {
+                await interaction.reply(`The tally ${name} currently stands at  ${finalResult}`);
+            }
         } catch (error) {
             console.error('Error incrementing number:', error);
         }
