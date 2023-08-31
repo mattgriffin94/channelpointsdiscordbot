@@ -46,6 +46,7 @@ function createTallyCommandWithInfo(): CommandWithInfo {
                 { upsert: true, returnDocument: ReturnDocument.AFTER },
             );
 
+            // Sum counts of all outcomes for an action
             const totalOutcomes = await collection.aggregate([
                 { $match: {key: name } },
                 { $group: { _id: null, total: { $sum: "$value"}}}
