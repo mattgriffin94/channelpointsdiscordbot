@@ -34,16 +34,10 @@ function createTallyCommandWithInfo(): CommandWithInfo {
             const name = interaction.options.getString('name');
             const outcome = interaction.options.getString('outcome');
             const incrementBy = interaction.options.getInteger('increment') || 0;
-            // let incrementBy = interaction.options.getInteger('increment');
-            // if (incrementBy === null || incrementBy === undefined) {
-            //     incrementBy = 0;
-            // }
 
             // set up the db and collection
             const database = client.db('discord');
             const collection = database.collection('keyValuePairs');
-
-            let finalResult = 0;
 
             // Tell Mongo to Update the Key by the Increment
             const result = await collection.findOneAndUpdate(
@@ -52,34 +46,16 @@ function createTallyCommandWithInfo(): CommandWithInfo {
                 { upsert: true, returnDocument: ReturnDocument.AFTER },
             );
 
-            // If we got a result back great! It means it already existed
-            // if (result !== null) {
-            //     finalResult = result.value;
-            // }
-
-            // Otherwise we need to actually create it
-            // else {
-            //     const data = { key: name, value: incrementBy };
-            //     await collection.insertOne(data);
-            //     finalResult = incrementBy;
-            // }
-
             const totalOutcomes = await collection.aggregate([
                 { $match: {key: name } },
-                { $group: { _id: null, total: { $sum: "$value "}}}
+                { $group: { _id: null, total: { $sum: "$value"}}}
             ]).next();
 
             const percentage = Math.round((result?.value / totalOutcomes?.total) * 100);
 
-            // if (incrementBy != 0) {
             // eslint-disable-next-line max-len
-            await interaction.reply(`The tally ${name} is ${outcome} ${result?.value} out of ${totalOutcomes?.total} times (${percentage}%)`)
-                // await interaction.reply(`The tally *** ${name} *** was updated by *** ${incrementBy} *** and is now *** ${finalResult} ***`);
-            // }
-            // else {
-                // await interaction.reply(`The tally ${name} is ${outcome} ${result?.value} out of ${totalOutcomes?.total} times (${percentage}%)`)
-                // await interaction.reply(`The tally *** ${name} *** currently stands at *** ${finalResult} ***`);
-            // }
+            await interaction.reply(`***${name}*** is *${outcome}* ${result?.value} out of ${totalOutcomes?.total} times (${percentage}%)`)
+
         }
         catch (error) {
             console.error('Error processing tally:', error);
