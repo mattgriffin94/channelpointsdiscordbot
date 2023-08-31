@@ -23,8 +23,8 @@ function createTallyCommandWithInfo(): CommandWithInfo {
             option =>
                 option
                     .setName('increment')
-                    .setDescription('How much to adjust the tally.  Leave blank to read back current value')
-                    .setRequired(false),
+                    .setDescription('How much to adjust the tally.  Enter 0 to read back current value')
+                    .setRequired(true),
         );
 
     async function execute(interaction: ChatInputCommandInteraction) {
