@@ -110,4 +110,3 @@ build
 
 # Bot token
 .env
-src/config.json
