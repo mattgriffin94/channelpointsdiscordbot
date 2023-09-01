@@ -4,7 +4,9 @@ import { client } from '../db/MongoManager';
 import { ReturnDocument } from 'mongodb';
 
 function createTallyCommandWithInfo(): CommandWithInfo {
-    const command = new SlashCommandBuilder().setName('tally').setDescription('Updates and retrieves statistics for a specific name and outcome')
+    const command = new SlashCommandBuilder()
+        .setName('tally')
+        .setDescription('Updates and retrieves statistics for a specific name and outcome')
         .addStringOption(
             option =>
                 option
@@ -48,14 +50,14 @@ function createTallyCommandWithInfo(): CommandWithInfo {
 
             // Sum counts of all outcomes for an action
             const totalOutcomes = await collection.aggregate([
-                { $match: {key: name } },
-                { $group: { _id: null, total: { $sum: "$value"}}}
+                { $match: { key: name } },
+                { $group: { _id: null, total: { $sum: '$value' } } },
             ]).next();
 
             const percentage = Math.round((result?.value / totalOutcomes?.total) * 100);
 
             // eslint-disable-next-line max-len
-            await interaction.reply(`***${name}*** is *${outcome}* ${result?.value} out of ${totalOutcomes?.total} times (${percentage}%)`)
+            await interaction.reply(`***${name}*** is *${outcome}* ${result?.value} out of ${totalOutcomes?.total} times (${percentage}%)`);
 
         }
         catch (error) {
